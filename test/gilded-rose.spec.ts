@@ -104,4 +104,15 @@ describe("gilded rose", () => {
         });
     });
 
+    describe("Sulfuras", () => {
+        it("Never Changes", () => {
+            const sulfuras = new ItemClass("Sulfuras, Hand of Ragnaros", 0, 25);
+    
+            const gildedRose = new GildedRose([sulfuras]);
+            gildedRose.updateQuality();
+
+            expect(sulfuras.quality).toBe(25);
+            expect(sulfuras.sellIn).toBe(0);
+        });
+    });
 });
