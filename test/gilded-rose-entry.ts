@@ -3,7 +3,7 @@ import { ItemClass } from "../src/item-class";
 
 describe("entry point of gilded rose", (): void => {
 	xit("should emulate the GildedRoseCliEntryPoint output", (): void => {
-		console.log("OMGHAI!");
+		console.info("OMGHAI!");
 
 		const items = [
 			new ItemClass("+5 Dexterity Vest", 10, 20), //
@@ -23,12 +23,12 @@ describe("entry point of gilded rose", (): void => {
 		const days = 2;
 
 		for (let i = 0; i < days; i++) {
-			console.log(`-------- day ${i} --------`);
-			console.log("name, sellIn, quality");
+			console.info(`-------- day ${i} --------`);
+			console.info("name, sellIn, quality");
 			items.forEach((item) => {
-				console.log(item);
+				console.info(item);
 			});
-			console.log();
+			console.info();
 			app.updateQuality();
 		}
 	});
