@@ -1,42 +1,43 @@
+import { FactoryItem } from "../src/factory-Item";
 import { GildedRose } from "../src/gilded-rose";
-import { ItemClass } from "../src/item-class";
+import { Quality, SellIn } from "../src/item-value";
 
 describe("gilded rose", () => {
 	describe("whatever case", () => {
 		it("That SellIn Value Is Decreased", () => {
-			const whateverItem = new ItemClass("whatever", 10, 0);
+			const whateverItem = FactoryItem.basedOn("whatever", 10, 0);
 
-			const gildedRose = new GildedRose([whateverItem]);
-			gildedRose.updateQuality();
+			new GildedRose().updateQuality([whateverItem]);
 
-			expect(whateverItem.sellIn).toBe(9);
+			const expectedSellIn = new SellIn(9);
+			expect(whateverItem.sellIn).toEqual(expectedSellIn);
 		});
 
 		it("That Quality Value Is Decreased", () => {
-			const whateverItem = new ItemClass("whatever", 1, 10);
+			const whateverItem = FactoryItem.basedOn("whatever", 1, 10);
 
-			const gildedRose = new GildedRose([whateverItem]);
-			gildedRose.updateQuality();
+			new GildedRose().updateQuality([whateverItem]);
 
-			expect(whateverItem.quality).toBe(9);
+			const expectedQuality = new Quality(9);
+			expect(whateverItem.quality).toEqual(expectedQuality);
 		});
 
 		it("That Quality Decreases Twice As Much When Sell By Is Passed", () => {
-			const whateverItem = new ItemClass("whatever", 0, 10);
+			const whateverItem = FactoryItem.basedOn("whatever", 0, 10);
 
-			const gildedRose = new GildedRose([whateverItem]);
-			gildedRose.updateQuality();
+			new GildedRose().updateQuality([whateverItem]);
 
-			expect(whateverItem.quality).toBe(8);
+			const expectedQuality = new Quality(8);
+			expect(whateverItem.quality).toEqual(expectedQuality);
 		});
 
 		it("That Quality Is Never Negative", () => {
-			const whateverItem = new ItemClass("whatever", 0, 0);
+			const whateverItem = FactoryItem.basedOn("whatever", 0, 0);
 
-			const gildedRose = new GildedRose([whateverItem]);
-			gildedRose.updateQuality();
+			new GildedRose().updateQuality([whateverItem]);
 
-			expect(whateverItem.quality).toBe(0);
+			const expectedQuality = new Quality(0);
+			expect(whateverItem.quality).toEqual(expectedQuality);
 		});
 	});
 
@@ -44,21 +45,21 @@ describe("gilded rose", () => {
 		const NAME_AGED_BRIE = "Aged Brie";
 
 		it("Increases Quality With Age", () => {
-			const agedBrie = new ItemClass(NAME_AGED_BRIE, 5, 1);
+			const agedBrie = FactoryItem.basedOn(NAME_AGED_BRIE, 5, 1);
 
-			const gildedRose = new GildedRose([agedBrie]);
-			gildedRose.updateQuality();
+			new GildedRose().updateQuality([agedBrie]);
 
-			expect(agedBrie.quality).toBe(2);
+			const expectedQuality = new Quality(2);
+			expect(agedBrie.quality).toEqual(expectedQuality);
 		});
 
 		it("Quality Never Increases Past Fifty", () => {
-			const agedBrie = new ItemClass(NAME_AGED_BRIE, 5, 50);
+			const agedBrie = FactoryItem.basedOn(NAME_AGED_BRIE, 5, 50);
 
-			const gildedRose = new GildedRose([agedBrie]);
-			gildedRose.updateQuality();
+			new GildedRose().updateQuality([agedBrie]);
 
-			expect(agedBrie.quality).toBe(50);
+			const expectedQuality = new Quality(50);
+			expect(agedBrie.quality).toEqual(expectedQuality);
 		});
 	});
 
@@ -66,51 +67,53 @@ describe("gilded rose", () => {
 		const NAME_BACKSTAGE = "Backstage passes to a TAFKAL80ETC concert";
 
 		it("Pass Increases Quality By One If Sell By Greater Then Ten", () => {
-			const backstagePasses = new ItemClass(NAME_BACKSTAGE, 11, 20);
+			const backstagePasses = FactoryItem.basedOn(NAME_BACKSTAGE, 11, 20);
 
-			const gildedRose = new GildedRose([backstagePasses]);
-			gildedRose.updateQuality();
+			new GildedRose().updateQuality([backstagePasses]);
 
-			expect(backstagePasses.quality).toBe(21);
+			const expectedQuality = new Quality(21);
+			expect(backstagePasses.quality).toEqual(expectedQuality);
 		});
 
 		it("Pass Increases Quality By Two If Sell By Smaller Than Ten", () => {
-			const backstagePasses = new ItemClass(NAME_BACKSTAGE, 6, 20);
+			const backstagePasses = FactoryItem.basedOn(NAME_BACKSTAGE, 6, 20);
 
-			const gildedRose = new GildedRose([backstagePasses]);
-			gildedRose.updateQuality();
+			new GildedRose().updateQuality([backstagePasses]);
 
-			expect(backstagePasses.quality).toBe(22);
+			const expectedQuality = new Quality(22);
+			expect(backstagePasses.quality).toEqual(expectedQuality);
 		});
 
 		it("Pass Increases Quality By Three If Sell By Smaller Than Five", () => {
-			const backstagePasses = new ItemClass(NAME_BACKSTAGE, 5, 20);
+			const backstagePasses = FactoryItem.basedOn(NAME_BACKSTAGE, 5, 20);
 
-			const gildedRose = new GildedRose([backstagePasses]);
-			gildedRose.updateQuality();
+			new GildedRose().updateQuality([backstagePasses]);
 
-			expect(backstagePasses.quality).toBe(23);
+			const expectedQuality = new Quality(23);
+			expect(backstagePasses.quality).toEqual(expectedQuality);
 		});
 
 		it("Pass Loses Value After Sell By Passes", () => {
-			const backstagePasses = new ItemClass(NAME_BACKSTAGE, 0, 20);
+			const backstagePasses = FactoryItem.basedOn(NAME_BACKSTAGE, 0, 20);
 
-			const gildedRose = new GildedRose([backstagePasses]);
-			gildedRose.updateQuality();
+			new GildedRose().updateQuality([backstagePasses]);
 
-			expect(backstagePasses.quality).toBe(0);
+			const expectedQuality = new Quality(0);
+			expect(backstagePasses.quality).toEqual(expectedQuality);
 		});
 	});
 
 	describe("Sulfuras", () => {
 		it("Never Changes", () => {
-			const sulfuras = new ItemClass("Sulfuras, Hand of Ragnaros", 0, 25);
+			const sulfuras = FactoryItem.basedOn("Sulfuras, Hand of Ragnaros", 0, 25);
 
-			const gildedRose = new GildedRose([sulfuras]);
-			gildedRose.updateQuality();
+			new GildedRose().updateQuality([sulfuras]);
 
-			expect(sulfuras.quality).toBe(25);
-			expect(sulfuras.sellIn).toBe(0);
+			const expectedQuality = new Quality(25);
+			expect(sulfuras.quality).toEqual(expectedQuality);
+
+			const expectedSellIn = new SellIn(0);
+			expect(sulfuras.sellIn).toEqual(expectedSellIn);
 		});
 	});
 });
